@@ -1,4 +1,4 @@
-```bash
+```
 $ node test/test-statement.js
 x = x + 1, { x: <<2>> }
 x = 2 + 1, { x: <<2>> }
