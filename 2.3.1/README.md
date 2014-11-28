@@ -1,4 +1,40 @@
-```bash
+```
+$ node test/test-expression.js
+<<1 * 2 + 3 * 4>>
+true
+<<2 + 3 * 4>>
+true
+<<2 + 12>>
+true
+<<14>>
+false
+
+$ node test/test-machine-0.js
+1 * 2 + 3 * 4
+2 + 3 * 4
+2 + 12
+14
+
+$ node test/test-less-than.js
+5 < 2 + 2
+5 < 4
+false
+
+$ node test/test-machine-1.js
+x + y
+3 + y
+3 + 4
+7
+
+$ node test/test-reduce.js
+<<x = x + 1>>
+{ x: <<2>> }
+true
+[ <<x = 2 + 1>>, { x: <<2>> } ]
+[ <<x = 3>>, { x: <<2>> } ]
+[ <<do-nothing>>, { x: <<3>> } ]
+false
+
 $ node test/test-statement.js
 x = x + 1, { x: <<2>> }
 x = 2 + 1, { x: <<2>> }
