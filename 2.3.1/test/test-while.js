@@ -4,7 +4,7 @@ var Number = require('../lib/number')
   , LessThan = require('../lib/less-than')
   , Variable = require('../lib/variable')
   , Assign = require('../lib/assign')
-  , While = require('../lib/while')
+  , While = require('../lib/while');
 
 new Machine(
   new While(
