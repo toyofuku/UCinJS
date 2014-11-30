@@ -86,3 +86,36 @@ assert.deepEqual(FizzBuzz.to_array(solution).map(function(p){return FizzBuzz.to_
 '71','Fizz','73','74','FizzBuzz','76','77','Fizz','79','Buzz',
 'Fizz','82','83','Fizz','Buzz','86','Fizz','88','89','FizzBuzz',
 '91','92','Fizz','94','Buzz','Fizz','97','98','Fizz','Buzz']);
+
+assert.equal(FizzBuzz.to_integer(FizzBuzz.FIRST(FizzBuzz.ZEROS)), 0);
+assert.equal(FizzBuzz.to_integer(FizzBuzz.FIRST(FizzBuzz.REST(FizzBuzz.ZEROS))), 0);
+assert.equal(FizzBuzz.to_integer(FizzBuzz.FIRST(FizzBuzz.REST(FizzBuzz.REST(FizzBuzz.REST(FizzBuzz.REST(FizzBuzz.REST(FizzBuzz.ZEROS))))))), 0);
+
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.ZEROS, 5).map(function(p){return FizzBuzz.to_integer(p);}), [0,0,0,0,0]);
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.ZEROS, 10).map(function(p){return FizzBuzz.to_integer(p);}), [0,0,0,0,0,0,0,0,0,0]);
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.ZEROS, 20).map(function(p){return FizzBuzz.to_integer(p);}), [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.UPWARDS_OF(FizzBuzz.ZERO), 5).map(function(p){return FizzBuzz.to_integer(p);}), [0,1,2,3,4]);
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.UPWARDS_OF(FizzBuzz.FIFTEEN), 20).map(function(p){return FizzBuzz.to_integer(p);}), [15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]);
+
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.MULTIPLES_OF(FizzBuzz.TWO), 10).map(function(p){return FizzBuzz.to_integer(p);}), [2,4,6,8,10,12,14,16,18,20]);
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.MULTIPLES_OF(FizzBuzz.FIVE), 20).map(function(p){return FizzBuzz.to_integer(p);}), [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]);
+
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.MULTIPLES_OF(FizzBuzz.THREE), 10).map(function(p){return FizzBuzz.to_integer(p);}), [3,6,9,12,15,18,21,24,27,30]);
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.MAP(FizzBuzz.MULTIPLES_OF(FizzBuzz.THREE))(FizzBuzz.INCREMENT), 10).map(function(p){return FizzBuzz.to_integer(p);}), [4,7,10,13,16,19,22,25,28,31]);
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.MAP(FizzBuzz.MULTIPLES_OF(FizzBuzz.THREE))(FizzBuzz.MULTIPLY(FizzBuzz.TWO)), 10).map(function(p){return FizzBuzz.to_integer(p);}), [6,12,18,24,30,36,42,48,54,60]);
+
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.MULTIPLY_STREAMS(FizzBuzz.UPWARDS_OF(FizzBuzz.ONE))(FizzBuzz.MULTIPLES_OF(FizzBuzz.THREE)), 10)
+  .map(function(p){return FizzBuzz.to_integer(p);}), [3,12,27,48,75,108,147,192,243,300]);
+
+assert.equal(FizzBuzz.to_integer(FizzBuzz.MOD_(FizzBuzz.THREE)(FizzBuzz.TWO)), 1);
+assert.equal(FizzBuzz.to_integer(FizzBuzz.MOD_(
+  FizzBuzz.POWER(FizzBuzz.THREE)(FizzBuzz.THREE)
+  )(
+  FizzBuzz.ADD(FizzBuzz.THREE)(FizzBuzz.TWO)
+  )) ,2);
+assert.equal(FizzBuzz.to_integer(FizzBuzz.MOD_(FizzBuzz.THREE)(FizzBuzz.ZERO)), 3);
+
+assert.deepEqual(FizzBuzz.to_array(FizzBuzz.RANGE_(FizzBuzz.FIVE)(FizzBuzz.TEN)).map(function(p){return FizzBuzz.to_integer(p); }), [5,6,7,8,9,10]);
+
+

@@ -162,6 +162,7 @@ var TEN = MULTIPLY(TWO)(FIVE)
 , BUZZ = UNSHIFT(UNSHIFT(UNSHIFT(UNSHIFT(EMPTY)(ZED))(ZED))(U))(B)
 , FIZZBUZZ = UNSHIFT(UNSHIFT(UNSHIFT(UNSHIFT(BUZZ)(ZED))(ZED))(I))(F);
 
+exports.TEN = TEN;
 exports.ZED = ZED;
 exports.FIZZ = FIZZ;
 exports.BUZZ = BUZZ;
@@ -213,3 +214,54 @@ var solution = MAP(RANGE(ONE)(HUNDRED))(function(n){
 });
 
 exports.solution = solution;
+
+
+var ZEROS = Z(function(f){ return UNSHIFT(f)(ZERO); });
+exports.ZEROS = ZEROS;
+
+var to_array = function(l, count){
+  var array = [];
+  while(! (to_boolean(IS_EMPTY(l)) || count == 0)){
+    array.push(FIRST(l));
+    l = REST(l);
+    if(count){count--;}
+  }
+  return array;
+};
+
+exports.to_array = to_array;
+
+var UPWARDS_OF = Z(function(f){ return function(n){ return UNSHIFT( function(x){ return f(INCREMENT(n))(x);} )(n)}; });
+exports.UPWARDS_OF = UPWARDS_OF;
+
+var MULTIPLES_OF = function(m){ return Z(function(f){
+  return function(n){ return UNSHIFT(function(x){ return f(ADD(m)(n))(x);})(n);};
+})(m); };
+exports.MULTIPLES_OF = MULTIPLES_OF;
+
+var MULTIPLY_STREAMS = Z(function(f){
+  return function(k){ return function(l){
+    return UNSHIFT(function(x){return f(REST(k))(REST(l))(x);})(MULTIPLY(FIRST(k))(FIRST(l)));
+  };};
+});
+
+exports.MULTIPLY_STREAMS = MULTIPLY_STREAMS;
+
+
+var MOD_ = function(m){ return function(n){
+  return m(function(x){
+    return IF(IS_LESS_OR_EQUAL(n)(x))(
+      SUBSTRACT(x)(n)
+    )(
+      x
+    );
+  })(m);
+}; };
+
+exports.MOD_ = MOD_;
+
+var COUNTDOWN = function(p){return PAIR(UNSHIFT(LEFT(p))(RIGHT(p)))(DECREMENT(RIGHT(p))); };
+exports.COUNTDOWN = COUNTDOWN;
+
+var RANGE_ = function(m){ return function(n){ return LEFT(INCREMENT(SUBSTRACT(n)(m))(COUNTDOWN)(PAIR(EMPTY)(n))); }; };
+exports.RANGE_ = RANGE_;
