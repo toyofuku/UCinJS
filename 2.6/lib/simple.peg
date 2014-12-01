@@ -1,0 +1,14 @@
+grammar Simple
+  statement <- while / assign
+  while <- "while (" condition:expression ") { " body:statement " }" <WhileNode>
+  assign <- name:[a-z]+ " = " expression <AssignNode>
+  expression <- less_than
+  less_than <- left:multiply " < " right:less_than <LessThanNode>
+               /
+               multiply
+  multiply <- left:term " * " right:multiply <MultiplyNode>
+              /
+              term
+  term <- number / variable
+  number <- [0-9]+ <NumberNode>
+  variable <- [a-z]+ <VariableNode>

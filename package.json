@@ -1,0 +1,22 @@
+{
+  "name": "UCinJS",
+  "version": "0.0.0",
+  "description": "UCinJS ======",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toyofuku/UCinJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toyofuku/UCinJS/issues"
+  },
+  "homepage": "https://github.com/toyofuku/UCinJS",
+  "dependencies": {
+    "canopy": "^0.2.0"
+  }
+}
