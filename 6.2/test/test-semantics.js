@@ -79,14 +79,14 @@ var one = new LCFunction('p', new LCFunction('x', new LCCall(new LCVariable('p')
 
 var expression = new LCCall(new LCCall(add, one), one);
 // function(m){ return function(n){ return n(function(n){ return function(p){ return function(x){ return p(n(p)(x)) } } })(m) } }(function(p){ return function(x){ return p(x) } })(function(p){ return function(x){ return p(x) } })
-console.log( expression );
+
 while(expression.reducible()){
   console.log( expression );
   expression = expression.reduce();
 }
 console.log( expression );
 
-/*
+
 var inc = new LCVariable('inc');
 var zero = new LCVariable('zero');
 var expression = new LCCall(new LCCall(expression, inc), zero);
@@ -96,4 +96,4 @@ while(expression.reducible()){
   expression = expression.reduce();
 }
 console.log( expression );
-*/
+

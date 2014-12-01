@@ -19,7 +19,6 @@ LCCall.prototype.replace = function(name, replacement){
 
 LCCall.prototype.callable = false;
 LCCall.prototype.reducible = function(){
-  // FIXME
   return this.left.reducible() || this.right.reducible() || this.left.callable
 };
 
