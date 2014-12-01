@@ -1,0 +1,5 @@
+grammar LambdaCalculus
+  expression <- calls / variable / function
+  calls <- first:(variable / function) rest:("[" expression "]")
+  variable <- [a-z]+
+  function <- "-> " parameter:[a-z]+ " { " body:expression " }"
