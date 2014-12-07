@@ -199,6 +199,8 @@ var TO_DIGITS = Z(function(f){return function(n){return PUSH(
   )
 )(MOD(n)(TEN));}});
 
+
+exports.PUSH = PUSH;
 exports.TO_DIGITS = TO_DIGITS;
 
 var solution = MAP(RANGE(ONE)(HUNDRED))(function(n){
