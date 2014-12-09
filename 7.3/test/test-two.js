@@ -1,3 +1,4 @@
+var assert = require('assert');
 
 var SKISymbol = require('../lib/ski-symbol');
 var SKICall = require('../lib/ski-call');
@@ -42,20 +43,36 @@ parser.Parser.FunctionNode = {
 };
 
 
-var two = parser.parse('-> p { -> x { p[p[x]] } }').to_ast();
-console.log( two );
+describe('-> p { -> x { p[p[x]] } }', function(){
 
-var ski = two.to_ski();
-console.log( ski );
+  var two = parser.parse('-> p { -> x { p[p[x]] } }').to_ast();
 
+  it('#to_ast()',function(){
+    console.log( two );
+    assert.equal('function(p){ return function(x){ return p(p(x)) } }', two.to_s());
+  })
 
-var inc = new SKISymbol('inc')
-  , zero = new SKISymbol('zero');
+  it('#to_ski()',function(){
+    var ski = two.to_ski();
+    console.log( ski );
+    assert.equal('S[S[K[S]][S[K[K]][I]]][S[S[K[S]][S[K[K]][I]]][K[I]]]', ski.to_s());
+  })
 
-expression = new SKICall(new SKICall(two.to_ski(), inc), zero);
-console.log( expression );
-while(expression.reducible()){
-  console.log( expression.to_s() );
-  expression = expression.reduce();
-}
-console.log( expression.to_s() );
+  describe('#reduce()',function(){
+    var inc = new SKISymbol('inc')
+      , zero = new SKISymbol('zero');
+
+    it('should be inc[inc[zero]]',function(){
+      expression = new SKICall(new SKICall(two.to_ski(), inc), zero);
+//      console.log( expression );
+      assert.equal('S[S[K[S]][S[K[K]][I]]][S[S[K[S]][S[K[K]][I]]][K[I]]][inc][zero]', expression.to_s());
+      while(expression.reducible()){
+        console.log( expression.to_s() );
+        expression = expression.reduce();
+      }
+      console.log( expression.to_s() );
+      assert.equal('inc[inc[zero]]', expression.to_s());
+    })
+  })
+
+})
