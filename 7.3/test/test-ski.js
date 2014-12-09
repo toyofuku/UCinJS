@@ -1,19 +1,14 @@
 
-var util = require('util')
+var assert = require('assert')
   , SKICombinator = require('../lib/ski-combinator')
   , SKISymbol = require('../lib/ski-symbol')
-  , SKICall = require('../lib/ski-call');
-
-var S = new SKICombinator('S')
+  , SKICall = require('../lib/ski-call')
+  , S = new SKICombinator('S')
   , K = new SKICombinator('K')
-  , I = new SKICombinator('I');
-
-var x = new SKISymbol('x');
-
-var expression = new SKICall(new SKICall(S, K), new SKICall(I, x));
-
-console.log( expression.to_s() );
-
+  , I = new SKICombinator('I')
+  , x = new SKISymbol('x')
+  , y = new SKISymbol('y')
+  , z = new SKISymbol('z');
 
 S.call = function(a, b, c){ return new SKICall(new SKICall(a, c), new SKICall(b, c)); };
 
@@ -21,94 +16,125 @@ K.call = function(a, b){ return a; };
 
 I.call = function(a){ return a; };
 
-var y = new SKISymbol('y')
-  , z = new SKISymbol('z');
+describe('SKICall', function(){
 
-console.log( S.call(x, y, z) );
+  it('should be S[K][I[x]]',function(){
+    var expression = new SKICall(new SKICall(S, K), new SKICall(I, x));
+    assert.equal('S[K][I[x]]', expression.to_s());
+  })
 
+  it('S.call',function(){
+    assert.equal('x[z][y[z]]', S.call(x, y, z).to_s());
+  })
 
-expression = new SKICall(new SKICall(new SKICall(S, x), y), z);
-console.log( expression.to_s() );
+  describe('S[x][y][z]', function(){
 
-var combinator = expression.left.left.left;
-console.log( combinator );
+    var expression = new SKICall(new SKICall(new SKICall(S, x), y), z);
 
-var first_argument = expression.left.left.right;
-console.log( first_argument );
+    it('left/right',function(){
+      assert.equal('S[x][y][z]', expression.to_s());
 
-var second_argument = expression.left.right;
-console.log( second_argument );
+      var combinator = expression.left.left.left;
+      assert.equal('S', combinator.to_s());
 
-var third_argument = expression.right;
-console.log( third_argument );
+      var first_argument = expression.left.left.right;
+      assert.equal('x', first_argument.to_s());
 
-console.log( combinator.call(first_argument, second_argument, third_argument) );
+      var second_argument = expression.left.right;
+      assert.equal('y', second_argument.to_s());
+  
+      var third_argument = expression.right;
+      assert.equal('z', third_argument.to_s());
+  
+      assert.equal('x[z][y[z]]', combinator.call(first_argument, second_argument, third_argument).to_s());
+    })
 
-combinator = expression.combinator();
-console.log( combinator );
+    it('#arguments()',function(){
+      assert.equal('S[x][y][z]', expression.to_s());
 
-var arguments = expression.arguments();
-console.log( arguments );
+      var combinator = expression.combinator();
+      assert.equal('S', combinator.to_s() );
 
-console.log( combinator.call.apply(this, arguments).to_s() );
+      var arguments = expression.arguments();
+      assert.deepEqual([x,y,z], arguments );
 
-S.callable = function(){ return arguments.length == 3; };
-K.callable = function(){ return arguments.length == 2; };
-I.callable = function(){ return arguments.length == 1; };
+      assert.equal('x[z][y[z]]', combinator.call.apply(this, arguments).to_s() );
+    })
+  })
 
-expression = new SKICall(new SKICall(x, y), z);
-console.log( expression.to_s() );
-console.log( expression.combinator().callable.apply(this, expression.arguments()));
+  describe('callable', function(){
+    S.callable = function(){ return arguments.length == 3; };
+    K.callable = function(){ return arguments.length == 2; };
+    I.callable = function(){ return arguments.length == 1; };
 
-expression = new SKICall(new SKICall(S, x), y);
-console.log( expression.to_s() );
-console.log( expression.combinator().callable.apply(this, expression.arguments()));
+    it('#callable()', function(){
+      var expression = new SKICall(new SKICall(x, y), z);
+      assert.equal('x[y][z]', expression.to_s());
+      assert.equal(false, expression.combinator().callable.apply(this, expression.arguments()));
 
-expression = new SKICall(new SKICall(new SKICall(S, x), y), z);
-console.log( expression.to_s() );
-console.log( expression.combinator().callable.apply(this, expression.arguments()));
+      expression = new SKICall(new SKICall(S, x), y);
+      assert.equal('S[x][y]', expression.to_s() );
+      assert.equal(false, expression.combinator().callable.apply(this, expression.arguments()));
 
-var swap = new SKICall(new SKICall(S, new SKICall(K, new SKICall(S, I))), K);
-console.log( swap.to_s() );
-expression = new SKICall(new SKICall(swap, x), y);
-console.log( expression.to_s() );
-while(expression.reducible()){
-	console.log( expression.to_s() );
-	expression = expression.reduce();
-}
-console.log( expression.to_s() );
+      expression = new SKICall(new SKICall(new SKICall(S, x), y), z);
+      assert.equal('S[x][y][z]', expression.to_s() );
+      assert.equal(true, expression.combinator().callable.apply(this, expression.arguments()));
+    })
 
+    it('#reducible()', function(){
+      var swap = new SKICall(new SKICall(S, new SKICall(K, new SKICall(S, I))), K);
+      assert.equal('S[K[S[I]]][K]', swap.to_s());
 
-var original = new SKICall(new SKICall(S, K), I);
-console.log( original.to_s() );
-var function_ = original.as_a_function_of('x');
-console.log( function_ );
-console.log( function_.reducible() );
+      expression = new SKICall(new SKICall(swap, x), y);
+      assert.equal('S[K[S[I]]][K][x][y]',expression.to_s());
 
-expression = new SKICall(function_, y);
-console.log( expression );
-while(expression.reducible()){
-	console.log( expression.to_s() );
-	expression = expression.reduce();
-}
-console.log( expression.to_s() );
+      while(expression.reducible()){
+        console.log( expression.to_s() );
+        expression = expression.reduce();
+      }
+      console.log( expression.to_s() );
+      assert.equal('y[x]',expression.to_s());
+    })
 
-console.log( expression.to_s() == original.to_s() );
+    it('#as_a_function_of', function(){
+      var original = new SKICall(new SKICall(S, K), I);
+      assert.equal('S[K][I]', original.to_s());
 
+      var function_ = original.as_a_function_of('x');
+      assert.equal('S[S[K[S]][K[K]]][K[I]]', function_.to_s());
+      assert.equal(false, function_.reducible());
 
-var original = new SKICall(new SKICall(S, x), I);
-console.log( original.to_s() );
-function_ = original.as_a_function_of('x');
-console.log( function_ );
+      var expression = new SKICall(function_, y);
+      assert.equal('S[S[K[S]][K[K]]][K[I]][y]',expression.to_s());
 
-expression = new SKICall(function_, y);
-console.log( expression );
-while(expression.reducible()){
-	console.log( expression.to_s() );
-	expression = expression.reduce();
-}
-console.log( expression.to_s() );
+      while(expression.reducible()){
+        console.log( expression.to_s() );
+        expression = expression.reduce();
+      }
+      console.log( expression.to_s() );
+      assert.equal('S[K][I]',expression.to_s());
 
-console.log( expression.to_s() == original.to_s() );
+      assert.equal( expression.to_s(), original.to_s() );
+    })
 
+    it('#as_a_function_of()', function(){
+      var original = new SKICall(new SKICall(S, x), I);
+      assert.equal('S[x][I]', original.to_s());
 
+      var function_ = original.as_a_function_of('x');
+      assert.equal('S[S[K[S]][I]][K[I]]', function_.to_s());
+
+      expression = new SKICall(function_, y);
+      assert.equal('S[S[K[S]][I]][K[I]][y]',expression.to_s());
+
+      while(expression.reducible()){
+        console.log( expression.to_s() );
+        expression = expression.reduce();
+      }
+      console.log( expression.to_s() );
+      assert.equal('S[y][I]',expression.to_s());
+
+      assert.notEqual( expression.to_s(), original.to_s() );
+    })
+  })
+})

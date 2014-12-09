@@ -1,11 +1,9 @@
-var assert = require('assert');
-
-var SKISymbol = require('../lib/ski-symbol');
-var SKICall = require('../lib/ski-call');
-
-var LCVariable = require('../../6.2/lib/lc-variable');
-var LCCall     = require('../../6.2/lib/lc-call');
-var LCFunction = require('../../6.2/lib/lc-function');
+var assert     = require('assert')
+  , SKISymbol  = require('../lib/ski-symbol')
+  , SKICall    = require('../lib/ski-call')
+  , LCVariable = require('../../6.2/lib/lc-variable')
+  , LCCall     = require('../../6.2/lib/lc-call')
+  , LCFunction = require('../../6.2/lib/lc-function');
 
 LCVariable.prototype.to_ski = function(){
   return new SKISymbol(this.name);
