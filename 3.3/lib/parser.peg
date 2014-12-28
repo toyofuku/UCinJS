@@ -1,0 +1,16 @@
+grammar Parser
+  choose <- first:concatenate_or_empty "|" rest:choose <ChooseNode>
+            /
+            concatenate_or_empty
+  concatenate_or_empty <- concatenate / empty
+  concatenate <- first:repeat rest:concatenate  <ConcatenateNode>
+                 /
+                 repeat
+  empty <- ""  <EmptyNode>
+  repeat <- brackets "*"  <RepeatNode>
+            /
+            brackets
+  brackets <- "(" choose ")" <BracketsNode>
+              /
+              literal
+  literal <- [a-z] <LiteralNode>
