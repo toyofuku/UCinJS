@@ -5,7 +5,11 @@ var FARule = function(state, character, next_state){
 };
 
 FARule.prototype.applies_to = function(state, character){
-  return this.state == state && this.character == character;
+  if(JSON.stringify(this.state) == '{}'){
+    return this.state == state && this.character == character;
+  }else{
+    return JSON.stringify(this.state) == JSON.stringify(state) && this.character == character;  	
+  }
 };
 
 FARule.prototype.follow = function(){
@@ -13,9 +17,9 @@ FARule.prototype.follow = function(){
 };
 
 FARule.prototype.inspect = function(){
-  return "#<FARule " + this.state.inspect() + 
+  return "#<FARule " + this.state + 
     " --" + this.character +
-    "--> " + this.next_state.inspect()
+    "--> " + this.next_state +
     ">";
 };
 

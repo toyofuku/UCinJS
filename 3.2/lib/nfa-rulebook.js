@@ -27,4 +27,10 @@ NFARulebook.prototype.follow_free_moves = function(states){
   }
 };
 
+NFARulebook.prototype.alphabet = function(){
+  return this.rules.map(function(rule){return rule.character;})
+         .filter(function (x, i, self){ return x !== null && self.indexOf(x) === i; });
+
+};
+
 module.exports = NFARulebook;

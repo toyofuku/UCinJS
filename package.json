@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/toyofuku/UCinJS",
   "dependencies": {
-    "canopy": "^0.2.0"
+    "canopy": "^0.2.0",
+    "underscore": "^1.8.2"
   }
 }

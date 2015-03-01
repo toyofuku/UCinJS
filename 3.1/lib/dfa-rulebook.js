@@ -1,3 +1,5 @@
+var __ = require('underscore');
+
 var DFARulebook = function(rules){
   this.rules = rules;
 };
@@ -7,8 +9,7 @@ DFARulebook.prototype.next_state = function(state, character){
 };
 
 DFARulebook.prototype.rule_for = function(state, character){
-  var _detect = this.rules.filter(function(rule){ return rule.applies_to(state, character); });
-  return _detect.length > 0 ? _detect[0] : null;
+  return __.detect(this.rules, function(rule){ return rule.applies_to(state, character); });
 };
 
 module.exports = DFARulebook;

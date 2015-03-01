@@ -5,7 +5,9 @@ var DFA = function(current_state, accept_state, rulebook){
 };
 
 DFA.prototype.accepting = function(){
-  return this.accept_state.indexOf(this.current_state) >= 0;
+  return this.accept_state
+    .map(function(state){return JSON.stringify(state);})
+    .indexOf(JSON.stringify(this.current_state)) != -1;
 };
 
 DFA.prototype.read_character = function(character){

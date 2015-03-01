@@ -51,13 +51,13 @@ describe('Pattern', function(){
 
   describe('Concatenate', function(){
     var pattern = new Concatenate(new Literal('a'), new Literal('b'));
-    it('should not accept a', function(){
+    it('should not match a', function(){
       assert.equal(pattern.matches('a'), false);
     });
-    it('should accept ab', function(){
+    it('should match ab', function(){
       assert.equal(pattern.matches('ab'), true);
     });
-    it('should not accept abc', function(){
+    it('should not match abc', function(){
       assert.equal(pattern.matches('abc'), false);
     });
   });
@@ -69,13 +69,13 @@ describe('Pattern', function(){
     it('should be /abc/', function(){
       assert.equal(pattern.inspect(), '/abc/');
     });
-    it('should not accept a', function(){
+    it('should not match a', function(){
       assert.equal(pattern.matches('a'), false);
     });
-    it('should not accept ab', function(){
+    it('should not match ab', function(){
       assert.equal(pattern.matches('ab'), false);
     });
-    it('should accept abc', function(){
+    it('should match abc', function(){
       assert.equal(pattern.matches('abc'), true);
     });
   });
@@ -86,13 +86,13 @@ describe('Pattern', function(){
     it('should be /a|b/', function(){
       assert.equal(pattern.inspect(), '/a|b/');
     });
-    it('should accept a', function(){
+    it('should match a', function(){
       assert.equal(pattern.matches('a'), true);
     });
-    it('should accept b', function(){
+    it('should match b', function(){
       assert.equal(pattern.matches('b'), true);
     });
-    it('should not accept c', function(){
+    it('should not match c', function(){
       assert.equal(pattern.matches('c'), false);
     });
   });
@@ -103,16 +103,16 @@ describe('Pattern', function(){
     it('should be /a*/', function(){
       assert.equal(pattern.inspect(), '/a*/');
     });
-    it('should accept empty', function(){
+    it('should match empty', function(){
       assert.equal(pattern.matches(''), true);
     });
-    it('should accept a', function(){
+    it('should match a', function(){
       assert.equal(pattern.matches('a'), true);
     });
-    it('should accept aaaa', function(){
+    it('should match aaaa', function(){
       assert.equal(pattern.matches('aaaa'), true);
     });
-    it('should not accept b', function(){
+    it('should not match b', function(){
       assert.equal(pattern.matches('b'), false);
     });
   });
@@ -128,25 +128,25 @@ describe('Pattern', function(){
     it('should be /(a(|b))*/', function(){
       assert.equal(pattern.inspect(), '/(a(|b))*/');
     });
-    it('should accept empty', function(){
+    it('should match empty', function(){
       assert.equal(pattern.matches(''), true);
     });
-    it('should accept a', function(){
+    it('should match a', function(){
       assert.equal(pattern.matches('a'), true);
     });
-    it('should accept ab', function(){
+    it('should match ab', function(){
       assert.equal(pattern.matches('ab'), true);
     });
-    it('should accept aba', function(){
+    it('should match aba', function(){
       assert.equal(pattern.matches('aba'), true);
     });
-    it('should accept abab', function(){
+    it('should match abab', function(){
       assert.equal(pattern.matches('abab'), true);
     });
-    it('should accept abaab', function(){
+    it('should match abaab', function(){
       assert.equal(pattern.matches('abaab'), true);
     });
-    it('should not accept abba', function(){
+    it('should not match abba', function(){
       assert.equal(pattern.matches('abba'), false);
     });
   });

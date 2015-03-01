@@ -13,7 +13,8 @@ NFADesign.prototype.accepts = function(string){
 };
 
 NFADesign.prototype.to_nfa = function(){
-  return new NFA([this.start_state], this.accept_states, this.rulebook);
+  var current_states = (arguments.length == 0) ? [this.start_state] : arguments[0];
+  return new NFA(current_states, this.accept_states, this.rulebook);
 };
 
 module.exports = NFADesign;

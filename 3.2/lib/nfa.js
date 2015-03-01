@@ -1,3 +1,5 @@
+var __ = require('underscore');
+
 var NFA = function(current_states, accept_states, rulebook){
   this._current_states = current_states;
   this.accept_states = accept_states;
@@ -5,10 +7,7 @@ var NFA = function(current_states, accept_states, rulebook){
 };
 
 NFA.prototype.accepting = function(){
-  var any = this.current_states().filter(
-  	function(state){return this.accept_states.indexOf(state) != -1}.bind(this)
-  );
-  return any.length > 0;
+  return __.intersection(this.current_states(),this.accept_states).length > 0
 };
 
 NFA.prototype.read_character = function(character){
@@ -22,7 +21,8 @@ NFA.prototype.read_string = function(string){
 };
 
 NFA.prototype.current_states = function(){
-  return this.rulebook.follow_free_moves(this._current_states);
+  return this.rulebook.follow_free_moves(this._current_states)
+         .filter(function (x, i, self){ return self.indexOf(x) === i; });
 };
 
 module.exports = NFA;
