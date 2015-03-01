@@ -34,13 +34,10 @@ NFASimulation.prototype.discover_states_and_rules = function(states){
 };
 
 NFASimulation.prototype.to_dfa_design = function(){
-
   var start_state = this.nfa_design.to_nfa().current_states();
   var _states_and_rules = this.discover_states_and_rules([start_state]);
-  console.log(_states_and_rules);
   var accept_states = _states_and_rules[0].filter(function(state){ return this.nfa_design.to_nfa(state).accepting(); }.bind(this));
   return new DFADesign(start_state, accept_states, new DFARulebook(_states_and_rules[1]));
-
 };
 
 module.exports = NFASimulation;
