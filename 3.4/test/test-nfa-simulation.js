@@ -56,13 +56,13 @@ describe('NFADesign', function(){
     });
     it('should be a->[1,2] b->[3,2]', function(){
       var rules = simulation.rules_for([1,2]);
-      assert.equal(rules[0].inspect(), "#<FARule 1,2 --a--> 1,2>");
-      assert.equal(rules[1].inspect(), "#<FARule 1,2 --b--> 3,2>");
+      assert.equal(rules[0].inspect(), "#<FARule [1,2] --a--> [1,2]>");
+      assert.equal(rules[1].inspect(), "#<FARule [1,2] --b--> [3,2]>");
     });
     it('should be a->[] b->[1,3,2]', function(){
       var rules = simulation.rules_for([3,2])
-      assert.equal(rules[0].inspect(), "#<FARule 3,2 --a--> >");
-      assert.equal(rules[1].inspect(), "#<FARule 3,2 --b--> 1,3,2>");
+      assert.equal(rules[0].inspect(), "#<FARule [3,2] --a--> []>");
+      assert.equal(rules[1].inspect(), "#<FARule [3,2] --b--> [1,3,2]>");
     });
   });
 
@@ -74,14 +74,14 @@ describe('NFADesign', function(){
     it('should be [ [ 1, 2 ], [ 3, 2 ], [], [ 1, 3, 2 ] ]', function(){
       var states_and_rules = simulation.discover_states_and_rules([start_state]);
       assert.deepEqual(states_and_rules[0], [ [ 1, 2 ], [ 3, 2 ], [], [ 1, 3, 2 ] ]);
-      assert.equal(states_and_rules[1][0].inspect(), "#<FARule 1,2 --a--> 1,2>");
-      assert.equal(states_and_rules[1][1].inspect(), "#<FARule 1,2 --b--> 3,2>");
-      assert.equal(states_and_rules[1][2].inspect(), "#<FARule 3,2 --a--> >");
-      assert.equal(states_and_rules[1][3].inspect(), "#<FARule 3,2 --b--> 1,3,2>");
-      assert.equal(states_and_rules[1][4].inspect(), "#<FARule  --a--> >");
-      assert.equal(states_and_rules[1][5].inspect(), "#<FARule  --b--> >");
-      assert.equal(states_and_rules[1][6].inspect(), "#<FARule 1,3,2 --a--> 1,2>");
-      assert.equal(states_and_rules[1][7].inspect(), "#<FARule 1,3,2 --b--> 1,3,2>");
+      assert.equal(states_and_rules[1][0].inspect(), "#<FARule [1,2] --a--> [1,2]>");
+      assert.equal(states_and_rules[1][1].inspect(), "#<FARule [1,2] --b--> [3,2]>");
+      assert.equal(states_and_rules[1][2].inspect(), "#<FARule [3,2] --a--> []>");
+      assert.equal(states_and_rules[1][3].inspect(), "#<FARule [3,2] --b--> [1,3,2]>");
+      assert.equal(states_and_rules[1][4].inspect(), "#<FARule [] --a--> []>");
+      assert.equal(states_and_rules[1][5].inspect(), "#<FARule [] --b--> []>");
+      assert.equal(states_and_rules[1][6].inspect(), "#<FARule [1,3,2] --a--> [1,2]>");
+      assert.equal(states_and_rules[1][7].inspect(), "#<FARule [1,3,2] --b--> [1,3,2]>");
     });
   });
 

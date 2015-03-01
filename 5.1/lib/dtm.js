@@ -1,3 +1,5 @@
+var __ = require('underscore');
+
 var DTM = function(current_configuration, accept_states, rulebook){
   this.current_configuration = current_configuration;
   this.accept_states = accept_states;
@@ -5,7 +7,7 @@ var DTM = function(current_configuration, accept_states, rulebook){
 };
 
 DTM.prototype.accepting = function(){
-  return this.accept_states.indexOf(this.current_configuration.state) !== -1;
+  return __.contains(this.accept_states, this.current_configuration.state);
 };
 
 DTM.prototype.step = function(){

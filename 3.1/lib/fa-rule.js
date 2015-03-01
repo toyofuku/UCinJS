@@ -17,9 +17,9 @@ FARule.prototype.follow = function(){
 };
 
 FARule.prototype.inspect = function(){
-  return "#<FARule " + this.state + 
+  return "#<FARule " + JSON.stringify(this.state) + 
     " --" + this.character +
-    "--> " + this.next_state +
+    "--> " + JSON.stringify(this.next_state) +
     ">";
 };
 

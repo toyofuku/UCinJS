@@ -1,3 +1,5 @@
+var __ = require('underscore');
+
 var DFA = function(current_state, accept_state, rulebook){
   this.current_state = current_state;
   this.accept_state = accept_state;
@@ -5,9 +7,11 @@ var DFA = function(current_state, accept_state, rulebook){
 };
 
 DFA.prototype.accepting = function(){
-  return this.accept_state
-    .map(function(state){return JSON.stringify(state);})
-    .indexOf(JSON.stringify(this.current_state)) != -1;
+  return __.contains(
+    this.accept_state
+    .map(function(state){return JSON.stringify(state);}),
+    JSON.stringify(this.current_state)
+  );
 };
 
 DFA.prototype.read_character = function(character){

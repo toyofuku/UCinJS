@@ -1,3 +1,5 @@
+var __ = require('underscore');
+
 var NFARulebook = function(rules){
   this.rules = rules;
 };
@@ -6,8 +8,7 @@ NFARulebook.prototype.next_states = function(states, character){
   var _next_states = states.map(function(state){
     return this.follow_rules_for(state, character);
   }.bind(this));
-  return _next_states.length > 0 ?
-    _next_states.reduce(function(a,b){ return a.concat(b);}) : [];
+  return __.uniq(__.flatten(_next_states));
 };
 
 NFARulebook.prototype.follow_rules_for = function(state, character){
