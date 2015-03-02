@@ -5,9 +5,7 @@ var DPDARulebook = function(rules){
 };
 
 DPDARulebook.prototype.next_configuration = function(configuration, character){
-	var _rule_for = this.rule_for(configuration, character);
-//	console.log("DPDARulebook next_configuration ", _rule_for);
-  return _rule_for.follow(configuration);
+	return this.rule_for(configuration, character).follow(configuration);
 };
 
 DPDARulebook.prototype.rule_for = function(configuration, character){

@@ -12,8 +12,7 @@ var PDARule = function(state, character, next_state, pop_character, push_charact
 
 PDARule.prototype.applies_to = function(configuration, character){
   return this.state == configuration.state &&
-         this.pop_character == 
-           configuration.stack.top() &&
+         this.pop_character == configuration.stack.top() &&
          this.character == character
 };
 
@@ -23,8 +22,8 @@ PDARule.prototype.follow = function(configuration){
 
 PDARule.prototype.next_stack = function(configuration){
   var popped_stack = configuration.stack.pop();
-  return __.reduce(
-  	this.push_characters.reverse(),
+  return __.reduce(  //  Array.reverse()は破壊的メソッド
+    [].concat(this.push_characters).reverse(),
   	function(stack, character){ return stack.push(character); },
   	popped_stack);
 };

@@ -13,7 +13,7 @@ describe('DPDA', function(){
     new PDARule(2, null, 1, '$', ['$'])
   ]);
 
-  describe('version 1', function(){
+  describe('no current_configuration', function(){
     var dpda = new DPDA(new PDAConfiguration(1, new Stack(['$'])), [1], rulebook);
 
     it('should be true', function(){
@@ -23,24 +23,23 @@ describe('DPDA', function(){
     it('(() should be false', function(){
       dpda.read_string('(()');
       assert.equal(dpda.accepting(), false);
-      console.log( dpda.current_configuration() );
+      assert.equal(dpda.current_configuration().inspect(), "#<PDAConfiguration state=2, stack=#<Stack (b)$>>");
     });
   });
 
-  describe('version 2', function(){
+  describe('with current_configuration', function(){
     var dpda = new DPDA(new PDAConfiguration(1, new Stack(['$'])), [1], rulebook);
 
     it('(()( should be false', function(){
       dpda.read_string('(()(');
       assert.equal(dpda.accepting(), false);
-      console.log( dpda.current_configuration() );
-
+      assert.equal(dpda.current_configuration().inspect(), "#<PDAConfiguration state=2, stack=#<Stack (b)b$>>");
     });
 
     it('))() should be false', function(){
       dpda.read_string('))()');
       assert.equal(dpda.accepting(), true);
-      console.log( dpda.current_configuration() );
+      assert.equal(dpda.current_configuration().inspect(), "#<PDAConfiguration state=1, stack=#<Stack ($)>>");
     });
 
   });

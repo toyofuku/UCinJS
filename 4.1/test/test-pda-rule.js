@@ -11,7 +11,7 @@ describe('PDARule', function(){
     assert.equal(rule.applies_to(configuration, '('), true);
   });
 
-  it('should', function(){
-    console.log(rule.follow(configuration) );
+  it('should #<PDAConfiguration state=2, stack=#<Stack (b)$>>', function(){
+    assert.equal(rule.follow(configuration).inspect(), "#<PDAConfiguration state=2, stack=#<Stack (b)$>>");
   });
 });

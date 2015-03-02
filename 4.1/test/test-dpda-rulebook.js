@@ -12,22 +12,35 @@ describe('DPDARulebook', function(){
     new PDARule(2, null, 1, '$', ['$'])
   ]);
 
-  var configuration = new PDAConfiguration(1, new Stack(['$']));
+  describe('next_configuration', function(){
+    var configuration = new PDAConfiguration(1, new Stack(['$']));
 
-  configuration = rulebook.next_configuration(configuration, '(');
-  console.log(configuration);
+    it('( should be #<PDAConfiguration state=2, stack=#<Stack (b)$>>', function(){
+      configuration = rulebook.next_configuration(configuration, '(');
+      assert.equal(configuration.inspect(), "#<PDAConfiguration state=2, stack=#<Stack (b)$>>");
+    });
 
-  configuration = rulebook.next_configuration(configuration, '(');
-  console.log(configuration);
+    it('( should be #<PDAConfiguration state=2, stack=#<Stack (b)b$>>', function(){
+      configuration = rulebook.next_configuration(configuration, '(');
+      assert.equal(configuration.inspect(), "#<PDAConfiguration state=2, stack=#<Stack (b)b$>>");
+    });
 
-  configuration = rulebook.next_configuration(configuration, ')');
-  console.log(configuration);
+    it('should be', function(){
+      configuration = rulebook.next_configuration(configuration, ')');
+      assert.equal(configuration.inspect(), "#<PDAConfiguration state=2, stack=#<Stack (b)$>>");
+    });
+  });
 
-  it('should be', function(){
+  describe('follow_free_moves', function(){
     var configuration = new PDAConfiguration(2, new Stack(['$']));
-    console.log( configuration );
-    console.log( rulebook.follow_free_moves(configuration) );
 
+    it('should be', function(){
+      assert.equal(configuration.inspect(), "#<PDAConfiguration state=2, stack=#<Stack ($)>>");
+    });
+
+    it('should be', function(){
+      assert.equal(rulebook.follow_free_moves(configuration).inspect(), "#<PDAConfiguration state=1, stack=#<Stack ($)>>");
+    });
   });
 
 });

@@ -7,16 +7,16 @@ var DPDA = function(current_configuration, accept_states, rulebook){
 };
 
 DPDA.prototype.accepting = function(){
-  return __.include(this.accept_states, this._current_configuration.state);
+  return __.include(this.accept_states, this.current_configuration().state);
 };
 
 DPDA.prototype.read_character = function(character){
-  return this._current_configuration = 
-    this.rulebook.next_configuration(this._current_configuration, character);
+  this._current_configuration = 
+    this.rulebook.next_configuration(this.current_configuration(), character);
 };
 
 DPDA.prototype.read_string = function(string){
-  return __.each( string.split(''), function(character){
+  __.each( string.split(''), function(character){
     this.read_character(character);
   }.bind(this));
 };
