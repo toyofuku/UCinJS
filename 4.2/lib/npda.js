@@ -7,7 +7,6 @@ var NPDA = function(current_configurations, accept_states, rulebook){
 };
 
 NPDA.prototype.accepting = function(){
-  console.log('accepting', this.current_configurations(), this.accept_states);
   return __.any( this.current_configurations(),
     function(config){
       return __.include(this.accept_states, config.state);

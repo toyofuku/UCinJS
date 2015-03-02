@@ -4,18 +4,6 @@ var assert = require('assert')
   , NPDADesign = require('../../4.2/lib/npda-design');
 
 describe('NPDADesign', function(){
-/*
-  var rulebook = new NPDARulebook([
-    new PDARule(1, 'a',  2, '$', ['a', '$']),
-    new PDARule(1, 'b',  2, '$', ['b', '$']),
-    new PDARule(2, 'a',  2, 'a', ['a', 'a']),
-    new PDARule(2, 'b',  2, 'b', ['b', 'b']),
-    new PDARule(2, 'a',  2, 'b', []),
-    new PDARule(2, 'b',  2, 'a', []),
-    new PDARule(2, null, 1, '$', ['$'])
-  ]);
-*/
-
     var rulebook = new NPDARulebook([
       new PDARule(1, 'a',  1, '$', ['a', '$']),
       new PDARule(1, 'a',  1, 'a', ['a', 'a']),
@@ -23,9 +11,9 @@ describe('NPDADesign', function(){
       new PDARule(1, 'b',  1, '$', ['b', '$']),
       new PDARule(1, 'b',  1, 'a', ['b', 'a']),
       new PDARule(1, 'b',  1, 'b', ['b', 'b']),
-      new PDARule(1, 'm',  2, '$', ['$']),
-      new PDARule(1, 'm',  2, 'a', ['a']),
-      new PDARule(1, 'm',  2, 'b', ['b']),
+      new PDARule(1, null, 2, '$', ['$']),
+      new PDARule(1, null, 2, 'a', ['a']),
+      new PDARule(1, null, 2, 'b', ['b']),
       new PDARule(2, 'a',  2, 'a', []),
       new PDARule(2, 'b',  2, 'b', []),
       new PDARule(2, null, 3, '$', ['$'])
