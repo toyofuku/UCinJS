@@ -44,4 +44,16 @@ describe('DPDA', function(){
 
   });
 
+  describe('next_configuration', function(){
+    var dpda = new DPDA(new PDAConfiguration(1, new Stack(['$'])), [1], rulebook);
+
+    it('()) should be false', function(){
+      dpda.read_string('())');
+      assert.equal(dpda.current_configuration().inspect(), "#<PDAConfiguration state=[object Object], stack=#<Stack ($)>>");
+      assert.equal(dpda.accepting(), false);
+      assert.equal(dpda.is_stuck(), true);
+    });
+
+  });
+
 });

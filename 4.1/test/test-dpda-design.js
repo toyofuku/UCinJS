@@ -27,4 +27,9 @@ describe('DPDADesign', function(){
       assert.equal(dpda_design.accepts('(()(()(()()(()()))()'), false);
     });
 
+    it('()) should be false', function(){
+      assert.equal(dpda_design.accepts('())'), false);
+    });
+
+
 });
