@@ -1,7 +1,5 @@
 var assert = require('assert')
-//  , Stack = require('../../4.1/lib/stack')
   , PDARule = require('../../4.1/lib/pda-rule')
-//  , PDAConfiguration = require('../../4.1/lib/pda-configuration')
   , DPDARulebook = require('../../4.1/lib/dpda-rulebook')
   , DPDADesign = require('../../4.1/lib/dpda-design');
 
